@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <h2>May Budget</h2>
+    
+    <div>
+        Left to Budget: {{leftToBudget | currency}}
+    </div>
+    <div>
+        <h3>Income</h3>
+
+    </div>
+    <div>
+        <h3>Expenses</h3>
+        <div *ngFor="let item of lineItems">
+            <app-line-item [lineItem]="item"></app-line-item>
+        </div>
+    </div>
+</div>
