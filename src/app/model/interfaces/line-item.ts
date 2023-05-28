@@ -1,9 +1,8 @@
-import { Accounts } from "../enums/accounts.enum";
 import { Categories } from "../enums/categories.enums";
 import { IAccount } from "./account";
+import { IEntity } from "./entity";
 
-export interface ILineItem {
-    Id: number;
+export interface ILineItem extends IEntity {
     Name: string;
     Planned: number;
     Actual: number;

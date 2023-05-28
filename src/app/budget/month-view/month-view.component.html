@@ -1,24 +1,26 @@
 <div class="container-fluid">
-    <h2>May Budget</h2>
-    
-    <div>
-        Left to Budget: {{leftToBudget | currency}}
-    </div>
-    <div class="row">
-        <div class="col">Name</div>
-        <div class="col">Account</div>
-        <div class="col">Planned</div>
-        <div class="col">Actual</div>
-        <div class="col"></div>
-    </div>
-    <div>
-        <h3>Income</h3>
+    <h2>{{monthlyBudget?.Date | date: 'MMMM'}} Budget</h2>
 
-    </div>
-    <div>
-        <h3>Expenses</h3>
-        <div *ngFor="let item of lineItems">
-            <app-line-item [lineItem]="item"></app-line-item>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                Left to Plan: {{leftToPlan | currency}}
+            </div>
+            <div class="col">
+                Left to Budget: {{leftToBudget | currency}}
+            </div>
         </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">Name</div>
+            <div class="col">Account</div>
+            <div class="col">Planned</div>
+            <div class="col">Budgeted</div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <div *ngFor="let group of categoryGroups">
+        <app-category-view [categoryGroup]="group" (onTotalsUpdated)="updateTotals($event)"></app-category-view>
     </div>
 </div>

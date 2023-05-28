@@ -1,0 +1,7 @@
+<div>
+    <h3>{{categoryGroup.Category.Name}}</h3>
+    <hr />
+    <div *ngFor="let item of categoryGroup.LineItems">
+        <app-line-item [lineItem]="item" [showAllocation]="showAllocation" (onAllocation)="allocationUpdated()"></app-line-item>
+    </div>
+</div>
