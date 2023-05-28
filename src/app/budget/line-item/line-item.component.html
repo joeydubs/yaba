@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col">{{lineItem.Name}}</div>
             <div class="col">{{lineItem.Account.Name}}</div>
-            <div class="col">{{lineItem.Amount | currency}}</div>
+            <div class="col">{{lineItem.Planned | currency}}</div>
+            <div class="col">{{lineItem.Actual | currency}}</div>
             <div class="col">
                 <button class="btn btn-sm" [ngClass]="lineItem.Allocated ? 'btn-danger' : 'btn-success'" (click)="toggleAllocated()">
                     {{lineItem.Allocated ? 'Deallocate' : 'Allocate'}} Funds
