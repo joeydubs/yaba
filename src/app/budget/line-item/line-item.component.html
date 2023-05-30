@@ -6,7 +6,10 @@
             <div class="col">{{lineItem.Planned | currency}}</div>
             <div class="col">{{lineItem.Actual | currency}}</div>
             <div class="col">
-                <button *ngIf="showAllocation" class="btn btn-sm" [ngClass]="lineItem.Allocated ? 'btn-danger' : 'btn-success'" (click)="toggleAllocated()">
+                <span *ngIf="isExpense">{{remaining | currency}}</span>
+            </div>
+            <div class="col">
+                <button *ngIf="isExpense" class="btn btn-sm" [ngClass]="lineItem.Allocated ? 'btn-danger' : 'btn-success'" (click)="toggleAllocated()">
                     {{lineItem.Allocated ? 'Deallocate' : 'Allocate'}} Funds
                 </button>
             </div>

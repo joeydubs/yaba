@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h2>{{monthlyBudget?.Date | date: 'MMMM'}} Budget</h2>
+    <h2>{{monthlyBudget.Date | date: 'MMMM'}} Budget</h2>
 
     <div class="container">
         <div class="row">
@@ -8,6 +8,13 @@
             </div>
             <div class="col">
                 Left to Budget: {{leftToBudget | currency}}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div *ngForm="let balance of accountBalances; let i = index" class="col">
+                {{balance.Account.Name}} Balance: {{balance.Amount}}
             </div>
         </div>
     </div>

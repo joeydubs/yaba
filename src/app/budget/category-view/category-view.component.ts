@@ -13,7 +13,7 @@ export class CategoryViewComponent implements OnInit {
   @Input() categoryGroup!: ICategoryGroup;
   @Output() onTotalsUpdated = new EventEmitter<IUpdatedTotals>();
 
-  showAllocation: boolean = true;
+  isExpense: boolean = true;
   totalPlanned: number = 0;
   totalBudgeted: number = 0;
 
@@ -34,9 +34,7 @@ export class CategoryViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.categoryGroup.Category.ExpenseTypeId === ExpenseType.Income) {
-      this.showAllocation = false;
-    }
+    this.isExpense = this.categoryGroup.Category.ExpenseTypeId === ExpenseType.Expense;
     this.totalPlanned = this.currentPlanned;
     this.totalBudgeted = this.currentBudgeted;
     this.updateTotals();
