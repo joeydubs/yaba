@@ -26,10 +26,10 @@ export class LineItemComponent implements OnInit {
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    this.transactionService.getAllTransactions().subscribe(
+    this.transactionService.getCurrentTransactions().subscribe(
       (transactions) => {
         if (this.isExpense) {
-          this.remaining = this.lineItem.Actual + transactions.reduce((sum, t) => t.LineItemId === this.lineItem.Id ? sum + t.Amount : sum, 0)
+          this.updateRemainingBy(this.lineItem.Actual + transactions.reduce((sum, t) => t.LineItemId === this.lineItem.Id ? sum + t.Amount : sum, 0))
         }
       }
     );

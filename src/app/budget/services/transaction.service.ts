@@ -15,7 +15,7 @@ export class TransactionService {
     this.newTransactions$.next(transaction);
   }
 
-  getAllTransactions(): Observable<ITransaction[]> {
+  getCurrentTransactions(): Observable<ITransaction[]> {
     return of(transactions);
   }
 

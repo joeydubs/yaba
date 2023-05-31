@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div *ngFor="let balance of accountBalances; let i = index" class="col">
+            {{balance.Account.Name}} Balance: {{balance.Amount | currency}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Left to Plan: {{leftToPlan | currency}}
+        </div>
+        <div class="col">
+            Left to Budget: {{leftToBudget | currency}}
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>
