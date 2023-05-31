@@ -5,6 +5,7 @@ import { IMonthlyBudget } from '@model/interfaces/monthly-budget';
 import { IAccountBalance } from '@model/interfaces/account-balance';
 import { BudgetService } from '../services/budget.service';
 import { TransactionService } from '../services/transaction.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-month-view',
@@ -18,12 +19,12 @@ export class MonthViewComponent implements OnInit {
 
   subscriptions = new Subscription();
 
-  constructor(private budgetService: BudgetService, private transactionService: TransactionService) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    forkJoin([this.budgetService.getMonthlyBudgetById(1), this.budgetService.getCategoryGroups()])
-      .subscribe(([monthlyBudget, categoryGroups]) => {
-        if (!monthlyBudget) return; // TODO: show some kind of error, nav to prev month, or create new month?
+    this.route.data
+      .subscribe(({monthlyBudget, categoryGroups}) => {
+        if (!monthlyBudget) this.router.navigate(['../', '1']); // TODO: show some kind of error, nav to prev month, or create new month?
         this.monthlyBudget = monthlyBudget!;
         this.categoryGroups = categoryGroups;
       });

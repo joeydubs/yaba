@@ -9,5 +9,6 @@ export interface ILineItem extends IEntity {
     AccountId: number
     Account: IAccount;
     Allocated: boolean;
-    CategoryId: Categories;
+    CategoryId: number;
+    MonthlyBudgetId: number
 }

@@ -22,7 +22,11 @@ export class BudgetService {
     return of(categoryGroups);
   }
 
-  getMonthlyBudgetById(id: number): Observable<IMonthlyBudget | undefined> {
-    return of(monthlyBudgets.find((mb) => mb.Id === id));
+  getCategoryGroupsForBudget(id: number): Observable<ICategoryGroup[]> {
+    return of(categoryGroups.filter((cg) => cg.MonthlyBudgetId === id));
+  }
+
+  getMonthlyBudgetById(id: number): Observable<IMonthlyBudget | null> {
+    return of(monthlyBudgets.find((mb) => mb.Id === id) || null);
   }
 }

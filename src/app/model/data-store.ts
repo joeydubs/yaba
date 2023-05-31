@@ -10,11 +10,17 @@ import { IStartingBalance } from "./interfaces/starting-balance"
 import { ITransaction } from "./interfaces/transaction"
 
 export const lineItems: ILineItem[] = [
-    { Id: 1, AccountId: Accounts.WellsFargo, Name: 'Paycheck (10th)', Planned: 2909.00, Actual: 2909.73, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
-    { Id: 2, AccountId: Accounts.WellsFargo, Name: 'Paycheck (25th)', Planned: 0.00, Actual: 0.00, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
-    { Id: 3, AccountId: Accounts.WellsFargo, Name: 'Phones', Planned: 198.73, Actual: 0, CategoryId: Categories.Personal, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
-    { Id: 4, AccountId: Accounts.WellsFargo, Name: 'Internet', Planned: 49.99, Actual: 49.99, CategoryId: Categories.Personal, Allocated: true, Account: { Id: 1, Name: 'Wells Fargo' } },
-    { Id: 5, AccountId: Accounts.WellsFargo, Name: 'Rent', Planned: 900.00, Actual: 0, CategoryId: Categories.Home, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 1, MonthlyBudgetId: 1, AccountId: Accounts.WellsFargo, Name: 'Paycheck (10th)', Planned: 2909.00, Actual: 2909.73, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 2, MonthlyBudgetId: 1, AccountId: Accounts.WellsFargo, Name: 'Paycheck (25th)', Planned: 2909.00, Actual: 0, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 3, MonthlyBudgetId: 1, AccountId: Accounts.WellsFargo, Name: 'Phones', Planned: 198.73, Actual: 0, CategoryId: Categories.Personal, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 4, MonthlyBudgetId: 1, AccountId: Accounts.WellsFargo, Name: 'Internet', Planned: 49.99, Actual: 49.99, CategoryId: Categories.Personal, Allocated: true, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 5, MonthlyBudgetId: 1, AccountId: Accounts.WellsFargo, Name: 'Rent', Planned: 900.00, Actual: 0, CategoryId: Categories.Home, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 6, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Paycheck (10th)', Planned: 2909.00, Actual: 0, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 7, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Paycheck (25th)', Planned: 2909.00, Actual: 0, CategoryId: Categories.Income, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 8, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Phones', Planned: 198.73, Actual: 0, CategoryId: Categories.Personal, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 9, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Internet', Planned: 49.99, Actual: 0, CategoryId: Categories.Personal, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 10, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Only in June', Planned: 129, Actual: 0, CategoryId: Categories.Personal, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
+    { Id: 11, MonthlyBudgetId: 2, AccountId: Accounts.WellsFargo, Name: 'Rent', Planned: 900.00, Actual: 0, CategoryId: Categories.Home, Allocated: false, Account: { Id: 1, Name: 'Wells Fargo' } },
 ]
 
 export const accounts: IAccount[] = [
@@ -28,9 +34,12 @@ export const categories: ICategory[] = [
 ]
 
 export const categoryGroups: ICategoryGroup[] = [
-    { Category: categories.find((c) => c.Id === Categories.Income)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Income) },
-    { Category: categories.find((c) => c.Id === Categories.Home)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Home) },
-    { Category: categories.find((c) => c.Id === Categories.Personal)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Personal) },
+    { Id: 1, MonthlyBudgetId: 1, Category: categories.find((c) => c.Id === Categories.Income)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Income && li.MonthlyBudgetId === 1) },
+    { Id: 2, MonthlyBudgetId: 1, Category: categories.find((c) => c.Id === Categories.Home)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Home && li.MonthlyBudgetId === 1) },
+    { Id: 3, MonthlyBudgetId: 1, Category: categories.find((c) => c.Id === Categories.Personal)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Personal && li.MonthlyBudgetId === 1) },
+    { Id: 4, MonthlyBudgetId: 2, Category: categories.find((c) => c.Id === Categories.Income)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Income && li.MonthlyBudgetId === 2) },
+    { Id: 5, MonthlyBudgetId: 2, Category: categories.find((c) => c.Id === Categories.Home)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Home && li.MonthlyBudgetId === 2) },
+    { Id: 6, MonthlyBudgetId: 2, Category: categories.find((c) => c.Id === Categories.Personal)!, LineItems: lineItems.filter((li) => li.CategoryId === Categories.Personal && li.MonthlyBudgetId === 2) },
 ]
 
 export const startingBalances: IStartingBalance[] = [
@@ -39,9 +48,8 @@ export const startingBalances: IStartingBalance[] = [
 ]
 
 export const monthlyBudgets: IMonthlyBudget[] = [
-    {
-        Id: 1, Date: new Date('05-01-2023'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1),
-    }
+    { Id: 1, Date: new Date('05-01-2023'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
+    { Id: 2, Date: new Date('06-01-2023'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
 ]
 
 export const transactions: ITransaction[] = [
