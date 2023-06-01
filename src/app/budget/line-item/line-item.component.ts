@@ -14,6 +14,7 @@ export class LineItemComponent implements OnInit {
   @Input() isExpense: boolean = true;
   @Output() onAllocation = new EventEmitter<void>();
 
+  isEditing = false;
   transactions: ITransaction[] = [];
   remaining: number = 0;
 

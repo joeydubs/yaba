@@ -6,6 +6,7 @@ import { IAccountBalance } from '@model/interfaces/account-balance';
 import { BudgetService } from '../services/budget.service';
 import { TransactionService } from '../services/transaction.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BudgetSlugs } from 'src/app/nav/slugs/budget-slugs';
 
 @Component({
   selector: 'app-month-view',
@@ -24,9 +25,17 @@ export class MonthViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.data
       .subscribe(({monthlyBudget, categoryGroups}) => {
-        if (!monthlyBudget) this.router.navigate(['../', '1']); // TODO: show some kind of error, nav to prev month, or create new month?
+        if (!monthlyBudget) this.router.navigate([BudgetSlugs.root, '1']); // TODO: show some kind of error, nav to prev month, or create new month?
         this.monthlyBudget = monthlyBudget!;
         this.categoryGroups = categoryGroups;
       });
+  }
+
+  nextMonth(): void {
+    this.router.navigate([BudgetSlugs.root, this.monthlyBudget.Id + 1]);
+  }
+
+  prevMonth(): void {
+    this.router.navigate([BudgetSlugs.root, this.monthlyBudget.Id - 1]);
   }
 }

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BudgetModule } from './budget/budget.module';
 
 @NgModule({
@@ -12,8 +11,6 @@ import { BudgetModule } from './budget/budget.module';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
     BudgetModule,
     AppRoutingModule
   ],

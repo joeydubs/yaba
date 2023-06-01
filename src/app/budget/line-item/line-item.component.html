@@ -1,6 +1,6 @@
 <div class="m-1">
     <div class="container-fluid">
-        <div class="row">
+        <div *ngIf="!isEditing" class="row" (click)="isEditing = true;">
             <div class="col">{{lineItem.Name}}</div>
             <div class="col">{{lineItem.Account.Name}}</div>
             <div class="col">{{lineItem.Planned | currency}}</div>
@@ -13,6 +13,13 @@
                     {{lineItem.Allocated ? 'Deallocate' : 'Allocate'}} Funds
                 </button>
             </div>
+        </div>
+        <div *ngIf="isEditing" class="row">
+            <div class="col"><input type="text" [(ngModel)]="lineItem.Name" /></div>
+            <div class="col">{{lineItem.Account.Name}}</div>
+            <div class="col"><input type="number" [(ngModel)]="lineItem.Planned" scale="2" /></div>
+            <div class="col"><input type="number" [(ngModel)]="lineItem.Actual" scale="2" /></div>
+            <div class="col-2"><button type="button" class="btn btn-default" (click)="isEditing = false">Done</button></div>
         </div>
     </div>
 </div>

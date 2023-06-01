@@ -28,30 +28,35 @@ export class BudgetTotalsComponent {
   constructor(private budgetService: BudgetService, private accountService: AccountService, private transactionService: TransactionService) { }
 
   ngOnInit(): void {
-    forkJoin([this.budgetService.getCategoryGroups(), this.accountService.getStartingBalances(), this.transactionService.getCurrentTransactions()])
-      .subscribe(([categoryGroups, startingBalances, transactions]) => {
-        this.categoryGroups = categoryGroups;
+    this.subscriptions.add(this.budgetService.categoryGroupsForMonth$.subscribe((cg) => {
+      this.categoryGroups = cg;
+      this.calculatePlanned();
+    }))
+    forkJoin([this.accountService.getStartingBalances(), this.transactionService.getCurrentTransactions()])
+      .subscribe(([startingBalances, transactions]) => {
         this.startingBalances = startingBalances;
         this.transactions = transactions;
         this.accountBalances = this.startingBalances.map((sb): IAccountBalance => ({ Account: sb.Account, Amount: sb.Amount + transactions.reduce((sum, t) => t.AccountId === sb.Account.Id ? sum + t.Amount : sum, 0) }));
 
-        this.calculateTotals();
+        this.calculateBudgetRemainder();
 
         this.subscriptions.add(this.transactionService.newTransactions$.subscribe((nt) => this.updateAccountTotals(nt)));
         this.subscriptions.add(this.budgetService.lineItemBudgeted$.subscribe((ut) => this.updateBudgetTotals(ut)));
       });
   }
 
-  calculateTotals(): void {
-    this.leftToPlan = this.categoryGroups.reduce((catSum, cg) => {
-      const multiplier = cg.Category.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
-      return catSum + (multiplier * cg.LineItems.reduce((lineSum, li) => lineSum + li.Planned, 0));
-    }, this.startingBalances.reduce((sum, sb) => sum + sb.Amount, 0))
-
+  calculateBudgetRemainder(): void {
     this.leftToBudget = this.categoryGroups.reduce((catSum, cg) => {
       const multiplier = cg.Category.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
       return catSum + (multiplier * cg.LineItems.reduce((lineSum, li) => lineSum + li.Actual, 0));
     }, this.startingBalances.reduce((sum, sb) => sum + sb.Amount, 0))
+  }
+
+  calculatePlanned(): void {
+    this.leftToPlan = this.categoryGroups.reduce((catSum, cg) => {
+      const multiplier = cg.Category.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
+      return catSum + (multiplier * cg.LineItems.reduce((lineSum, li) => lineSum + li.Planned, 0));
+    }, 0)
   }
 
   updateBudgetTotals(totals: IUpdatedTotals): void {

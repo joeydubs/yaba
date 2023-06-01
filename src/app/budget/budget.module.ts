@@ -6,6 +6,7 @@ import { MonthViewComponent } from './month-view/month-view.component';
 import { LineItemComponent } from './line-item/line-item.component';
 import { CategoryViewComponent } from './category-view/category-view.component';
 import { BudgetTotalsComponent } from './budget-totals/budget-totals.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { BudgetTotalsComponent } from './budget-totals/budget-totals.component';
     BudgetTotalsComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     BudgetRoutingModule
   ]
