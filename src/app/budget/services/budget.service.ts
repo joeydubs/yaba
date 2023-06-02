@@ -11,23 +11,23 @@ import { IUpdatedTotals } from '@model/interfaces/updated-totals';
 })
 export class BudgetService {
   categoryGroupsForMonth$ = new BehaviorSubject<ICategoryGroup[]>([]);
-  lineItemBudgeted$ = new Subject<IUpdatedTotals>();
+  lineItemUpdated$ = new Subject<IUpdatedTotals>();
 
   constructor() { }
 
   getLineItems(): Observable<ILineItem[]> {
-    return of(lineItems);
+    return of(lineItems.map((li) => JSON.parse(JSON.stringify(li))));
   }
 
   getCategoryGroups(): Observable<ICategoryGroup[]> {
-    return of(categoryGroups);
+    return of(categoryGroups.map((cg) => JSON.parse(JSON.stringify(cg))));
   }
 
   getCategoryGroupsForBudget(id: number): Observable<ICategoryGroup[]> {
-    return of(categoryGroups.filter((cg) => cg.MonthlyBudgetId === id)).pipe(tap((cg) => this.categoryGroupsForMonth$.next(cg)));
+    return of(categoryGroups.filter((cg) => cg.MonthlyBudgetId === id).map((cg) => JSON.parse(JSON.stringify(cg)))).pipe(tap((cg) => this.categoryGroupsForMonth$.next(cg)));
   }
 
   getMonthlyBudgetById(id: number): Observable<IMonthlyBudget | null> {
-    return of(monthlyBudgets.find((mb) => mb.Id === id) || null);
+    return of(JSON.parse(JSON.stringify(monthlyBudgets.find((mb) => mb.Id === id))) || null);
   }
 }

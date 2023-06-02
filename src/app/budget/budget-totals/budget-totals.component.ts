@@ -41,7 +41,7 @@ export class BudgetTotalsComponent {
         this.calculateBudgetRemainder();
 
         this.subscriptions.add(this.transactionService.newTransactions$.subscribe((nt) => this.updateAccountTotals(nt)));
-        this.subscriptions.add(this.budgetService.lineItemBudgeted$.subscribe((ut) => this.updateBudgetTotals(ut)));
+        this.subscriptions.add(this.budgetService.lineItemUpdated$.subscribe((ut) => this.updateBudgetTotals(ut)));
       });
   }
 

@@ -12,6 +12,7 @@ export class TransactionService {
   constructor() { }
 
   addTransaction(transaction: ITransaction): void {
+    transactions.push(transaction);
     this.newTransactions$.next(transaction);
   }
 

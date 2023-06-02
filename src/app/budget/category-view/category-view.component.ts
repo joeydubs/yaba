@@ -22,11 +22,11 @@ export class CategoryViewComponent implements OnInit {
 
   get currentPlanned(): number {
     return this.lineItems.reduce((sum, li) => sum + li.Planned, 0);
-  }  
+  }
 
   get currentBudgeted(): number {
     return this.lineItems.reduce((sum, li) => sum + li.Actual, 0);
-  }  
+  }
 
   get expenseMultiplier(): number {
     return this.categoryGroup.Category.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
@@ -46,10 +46,13 @@ export class CategoryViewComponent implements OnInit {
     const offsetActual = (this.currentBudgeted - this.totalBudgeted) * this.expenseMultiplier;
     this.totalPlanned = this.currentPlanned;
     this.totalBudgeted = this.currentBudgeted;
-    this.budgetService.lineItemBudgeted$.next({ OffsetPlanned: offsetPlanned, OffsetActual: offsetActual })
+    this.budgetService.lineItemUpdated$.next({ OffsetPlanned: offsetPlanned, OffsetActual: offsetActual })
   }
 
-  allocationUpdated(): void {
+  updateLineItem(lineItem: ILineItem): void {
+    const index = this.lineItems.findIndex(li => li.Id === lineItem.Id);
+    if (index === -1) this.lineItems.push(lineItem);
+    else this.lineItems.splice(index, 1, lineItem);
     this.updateTotals();
   }
 }

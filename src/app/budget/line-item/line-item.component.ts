@@ -3,6 +3,9 @@ import { ILineItem } from '@model/interfaces/line-item';
 import { Subscription } from 'rxjs';
 import { ITransaction } from '@model/interfaces/transaction';
 import { TransactionService } from '../services/transaction.service';
+import { LineItemService } from '../services/line-item.service';
+import { ExpenseType } from '@model/enums/expense-type.enum';
+import { transactions } from '@model/data-store';
 
 @Component({
   selector: 'app-line-item',
@@ -12,8 +15,9 @@ import { TransactionService } from '../services/transaction.service';
 export class LineItemComponent implements OnInit {
   @Input() lineItem!: ILineItem;
   @Input() isExpense: boolean = true;
-  @Output() onAllocation = new EventEmitter<void>();
+  @Output() onLineItemChange = new EventEmitter<ILineItem>();
 
+  lineItemClone?: ILineItem;
   isEditing = false;
   transactions: ITransaction[] = [];
   remaining: number = 0;
@@ -24,7 +28,7 @@ export class LineItemComponent implements OnInit {
     return this.lineItem.Allocated;
   }
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService, private lineItemService: LineItemService) { }
 
   ngOnInit(): void {
     this.transactionService.getCurrentTransactions().subscribe(
@@ -46,14 +50,36 @@ export class LineItemComponent implements OnInit {
     this.lineItem.Actual += amount;
     this.updateRemainingBy(amount);
 
-    this.onAllocation.emit();
+    this.lineItemService.updateLineItem(this.lineItem).subscribe();
+    this.onLineItemChange.emit(this.lineItem);
   }
 
   updateRemainingBy(amount: number): void {
     if (this.isExpense) {
       this.remaining += amount;
     } else {
-      this.lineItem.Actual += amount;
+      // this.lineItem.Actual += amount;
     }
+  }
+
+  edit(): void {
+    this.lineItemClone = { ...this.lineItem };
+    this.isEditing = true;
+  }
+
+  cancel(): void {
+    this.isEditing = false;
+  }
+
+  save(): void {
+    const transactionAmount = this.lineItemClone!.Actual - this.lineItem.Actual;
+    this.lineItemService.updateLineItem(this.lineItemClone!).subscribe();
+    this.lineItem = this.lineItemClone!;
+
+    // Temp solution until transaction logic is added
+    if (!this.isExpense) this.transactionService.addTransaction({ Id: transactions.length, LineItemId: this.lineItem.Id, AccountId: this.lineItem.AccountId, Account: this.lineItem.Account, ExpenseTypeId: ExpenseType.Income, Amount: transactionAmount, Date: new Date(), IsCheck: false })
+
+    this.onLineItemChange.emit(this.lineItem);
+    this.isEditing = false;
   }
 }

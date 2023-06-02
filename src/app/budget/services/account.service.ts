@@ -11,6 +11,6 @@ export class AccountService {
   constructor() { }
 
   getStartingBalances(): Observable<IAccountBalance[]> {
-    return of(startingBalances);
+    return of(startingBalances.map((cg) => JSON.parse(JSON.stringify(cg))));
   }
 }

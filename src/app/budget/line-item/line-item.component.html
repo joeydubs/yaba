@@ -1,6 +1,6 @@
 <div class="m-1">
     <div class="container-fluid">
-        <div *ngIf="!isEditing" class="row" (click)="isEditing = true;">
+        <div *ngIf="!isEditing" class="row" (click)="edit();">
             <div class="col">{{lineItem.Name}}</div>
             <div class="col">{{lineItem.Account.Name}}</div>
             <div class="col">{{lineItem.Planned | currency}}</div>
@@ -9,17 +9,23 @@
                 <span *ngIf="isExpense">{{remaining | currency}}</span>
             </div>
             <div class="col">
-                <button *ngIf="isExpense" class="btn btn-sm" [ngClass]="lineItem.Allocated ? 'btn-danger' : 'btn-success'" (click)="toggleAllocated()">
+                <button *ngIf="isExpense" class="btn btn-sm"
+                    [ngClass]="lineItem.Allocated ? 'btn-danger' : 'btn-success'"
+                    (click)="toggleAllocated();$event.stopPropagation();">
                     {{lineItem.Allocated ? 'Deallocate' : 'Allocate'}} Funds
                 </button>
             </div>
         </div>
-        <div *ngIf="isEditing" class="row">
-            <div class="col"><input type="text" [(ngModel)]="lineItem.Name" /></div>
+        <div *ngIf="isEditing && lineItemClone" class="row">
+            <div class="col"><input type="text" [(ngModel)]="lineItemClone!.Name" /></div>
             <div class="col">{{lineItem.Account.Name}}</div>
-            <div class="col"><input type="number" [(ngModel)]="lineItem.Planned" scale="2" /></div>
-            <div class="col"><input type="number" [(ngModel)]="lineItem.Actual" scale="2" /></div>
-            <div class="col-2"><button type="button" class="btn btn-default" (click)="isEditing = false">Done</button></div>
+            <div class="col"><input type="number" [(ngModel)]="lineItemClone!.Planned" scale="2" /></div>
+            <div class="col"><input type="number" [(ngModel)]="lineItemClone!.Actual" scale="2" /></div>
+            <div class="col"></div>
+            <div class="col">
+                <button type="button" class="btn btn-sm btn-danger" (click)="cancel()">Cancel</button>
+                <button type="button" class="btn btn-sm btn-success" (click)="save()">Done</button>
+            </div>
         </div>
     </div>
 </div>
