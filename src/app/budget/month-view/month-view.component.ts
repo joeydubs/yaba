@@ -4,7 +4,7 @@ import { Subscription, forkJoin } from 'rxjs';
 import { IMonthlyBudget } from '@model/interfaces/monthly-budget';
 import { IAccountBalance } from '@model/interfaces/account-balance';
 import { BudgetService } from '../services/budget.service';
-import { TransactionService } from '../services/transaction.service';
+import { TransactionService } from '../../transactions/services/transaction.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BudgetSlugs } from 'src/app/nav/slugs/budget-slugs';
 

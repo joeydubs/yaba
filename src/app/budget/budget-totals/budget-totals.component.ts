@@ -4,7 +4,7 @@ import { IAccountBalance } from '@model/interfaces/account-balance';
 import { IUpdatedTotals } from '@model/interfaces/updated-totals';
 import { Subscription, forkJoin } from 'rxjs';
 import { BudgetService } from '../services/budget.service';
-import { TransactionService } from '../services/transaction.service';
+import { TransactionService } from '../../transactions/services/transaction.service';
 import { ITransaction } from '@model/interfaces/transaction';
 import { ICategoryGroup } from '@model/interfaces/category-group';
 import { AccountService } from '../services/account.service';

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ILineItem } from '@model/interfaces/line-item';
 import { Subscription } from 'rxjs';
 import { ITransaction } from '@model/interfaces/transaction';
-import { TransactionService } from '../services/transaction.service';
+import { TransactionService } from '../../transactions/services/transaction.service';
 import { LineItemService } from '../services/line-item.service';
 import { ExpenseType } from '@model/enums/expense-type.enum';
 import { transactions } from '@model/data-store';
