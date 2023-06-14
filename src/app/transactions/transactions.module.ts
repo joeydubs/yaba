@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TransactionDetailComponent } from './transaction-detail/transaction-detail.component';
 import { TransactionHeaderComponent } from './transaction-header/transaction-header.component';
 import { TransactionRoutingModule } from './transactions-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,11 @@ import { TransactionRoutingModule } from './transactions-routing.module';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     TransactionRoutingModule,
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class TransactionsModule { }

@@ -48,8 +48,8 @@ export const startingBalances: IStartingBalance[] = [
 ]
 
 export const monthlyBudgets: IMonthlyBudget[] = [
-    { Id: 1, Date: new Date('05-01-2023'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
-    { Id: 2, Date: new Date('06-01-2023'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
+    { Id: 1, Date: new Date('2023-05-01'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
+    { Id: 2, Date: new Date('2023-06-01'), StartingBalances: startingBalances.filter((sb) => sb.MonthlyBudgetId === 1) },
 ]
 
 export const transactions: ITransaction[] = [

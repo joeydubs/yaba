@@ -4,12 +4,18 @@ import { TransactionDetailComponent } from '../transactions/transaction-detail/t
 import { transactionResolver } from '../nav/resolvers/transaction.resolver';
 import { TransactionSlugs } from '../nav/slugs/transaction-slugs';
 import { TransactionHeaderComponent } from './transaction-header/transaction-header.component';
+import { accountsResolver } from '../nav/resolvers/accounts.resolver';
+
+const transactionDetailData = {
+    transaction: transactionResolver,
+    accounts: accountsResolver
+}
 
 const routes: Routes = [
     {
         path: `${TransactionSlugs.root}`, component: TransactionHeaderComponent, children: [
-            { path: `${TransactionSlugs.new}`, component: TransactionDetailComponent, resolve: { transaction: transactionResolver } },
-            { path: `:${TransactionSlugs.transactionId}`, component: TransactionDetailComponent, resolve: { transaction: transactionResolver } },
+            { path: `${TransactionSlugs.new}`, component: TransactionDetailComponent, resolve: transactionDetailData },
+            { path: `:${TransactionSlugs.transactionId}`, component: TransactionDetailComponent, resolve: transactionDetailData },
             { path: '', pathMatch: 'full', redirectTo: '1' /* create list page */ },
             { path: '**', redirectTo: '' },
         ]

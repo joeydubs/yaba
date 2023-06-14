@@ -26,6 +26,11 @@ export class BudgetService {
   getCategoryGroupsForBudget(id: number): Observable<ICategoryGroup[]> {
     return of(categoryGroups.filter((cg) => cg.MonthlyBudgetId === id).map((cg) => JSON.parse(JSON.stringify(cg)))).pipe(tap((cg) => this.categoryGroupsForMonth$.next(cg)));
   }
+  
+  getCategoryGroupsForMonth(date: string): Observable<ICategoryGroup[]> {
+    const budgetId = monthlyBudgets.find((b) => b.Date.toString() === new Date(date).toString())?.Id;
+    return of(categoryGroups.filter((cg) => cg.MonthlyBudgetId === budgetId).map((cg) => JSON.parse(JSON.stringify(cg))));
+  }
 
   getMonthlyBudgetById(id: number): Observable<IMonthlyBudget | null> {
     return of(JSON.parse(JSON.stringify(monthlyBudgets.find((mb) => mb.Id === id))) || null);

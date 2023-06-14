@@ -1,3 +1,37 @@
 <div class="container-fluid">
-    <h2>{{transaction?.Id === 0 ? 'New' : 'Edit'}} Transaction</h2>
+    <h2>{{transaction.Id === 0 ? 'New' : 'Edit'}} Transaction</h2>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="mb-3">
+            <div class="btn-group">
+                <ng-container *ngFor="let account of accounts; let i = index">
+                    <input type="radio" class="btn-check" id="accountId-{{i}}" formControlName="AccountId"
+                        [value]="account.Id">
+                    <label class="btn btn-outline-success" for="accountId-{{i}}">{{account.Name}}</label>
+                </ng-container>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="btn-group">
+                <input type="radio" class="btn-check" id="expenseType-income" formControlName="ExpenseTypeId"
+                    [value]="expenseType.Income">
+                <label for="expenseType-income" class="btn btn-outline-success">Income</label>
+                <input type="radio" class="btn-check" id="expenseType-expense" formControlName="ExpenseTypeId"
+                    [value]="expenseType.Expense">
+                <label for="expenseType-expense" class="btn btn-outline-success">Expense</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" formControlName="Amount">
+            </div>
+        </div>
+        <div class="mb-3">
+            <input type="date" class="form-control" formControlName="Date" (ngModelChange)="dateSelected($event)">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" formControlName="Notes">
+        </div>
+    </form>
+    <pre>{{form.value | json}}</pre>
 </div>
