@@ -36,11 +36,16 @@ export class BudgetTotalsComponent {
       .subscribe(([startingBalances, transactions]) => {
         this.startingBalances = startingBalances;
         this.transactions = transactions;
-        this.accountBalances = this.startingBalances.map((sb): IAccountBalance => ({ Account: sb.Account, Amount: sb.Amount + transactions.reduce((sum, t) => t.AccountId === sb.Account.Id ? sum + t.Amount : sum, 0) }));
+        this.accountBalances = this.startingBalances.map((sb): IAccountBalance => ({
+          Account: sb.Account, Amount: sb.Amount + transactions.reduce((sum, t) => {
+            const multiplier = t.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
+            return t.AccountId === sb.Account.Id ? sum + (multiplier * t.Amount) : sum
+          }, 0)
+        }));
 
         this.calculateBudgetRemainder();
 
-        this.subscriptions.add(this.transactionService.newTransactions$.subscribe((nt) => this.updateAccountTotals(nt)));
+        // this.subscriptions.add(this.transactionService.newTransactions$.subscribe((nt) => this.updateAccountTotals(nt)));
         this.subscriptions.add(this.budgetService.lineItemUpdated$.subscribe((ut) => this.updateBudgetTotals(ut)));
       });
   }
@@ -67,6 +72,7 @@ export class BudgetTotalsComponent {
   updateAccountTotals(transaction: ITransaction): void {
     const accountBalance = this.accountBalances.find((ab) => ab.Account.Id === transaction.AccountId);
     if (!accountBalance) return; // TODO: maybe refetch accounts in case a new one was added?
-    accountBalance.Amount += transaction.Amount;
+    const multiplier = transaction.ExpenseTypeId === ExpenseType.Income ? 1 : -1;
+    accountBalance.Amount += multiplier * transaction.Amount;
   }
 }

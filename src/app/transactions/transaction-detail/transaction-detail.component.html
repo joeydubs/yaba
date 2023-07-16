@@ -21,6 +21,13 @@
             </div>
         </div>
         <div class="mb-3">
+            <select formControlName="LineItemId">
+                <option *ngFor="let lineItem of lineItems" [ngValue]="lineItem.Id">
+                    {{lineItem.Name}}
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">$</span>
                 <input type="number" class="form-control" formControlName="Amount">
@@ -32,6 +39,7 @@
         <div class="mb-3">
             <input type="text" class="form-control" formControlName="Notes">
         </div>
+        <button type="submit" [disabled]="form.invalid">Add Transaction</button>
     </form>
     <pre>{{form.value | json}}</pre>
 </div>

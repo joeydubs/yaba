@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExpenseType } from '@model/enums/expense-type.enum';
 import { ICategoryGroup } from '@model/interfaces/category-group';
-import { ILineItem } from '@model/interfaces/line-item';
 import { BudgetService } from '../services/budget.service';
+import { IBudgetLineItem } from '@model/interfaces/budget-line-item';
 
 @Component({
   selector: 'app-category-view',
@@ -16,7 +16,7 @@ export class CategoryViewComponent implements OnInit {
   totalPlanned: number = 0;
   totalBudgeted: number = 0;
 
-  get lineItems(): ILineItem[] {
+  get lineItems(): IBudgetLineItem[] {
     return this.categoryGroup.LineItems;
   }
 
@@ -49,7 +49,7 @@ export class CategoryViewComponent implements OnInit {
     this.budgetService.lineItemUpdated$.next({ OffsetPlanned: offsetPlanned, OffsetActual: offsetActual })
   }
 
-  updateLineItem(lineItem: ILineItem): void {
+  updateLineItem(lineItem: IBudgetLineItem): void {
     const index = this.lineItems.findIndex(li => li.Id === lineItem.Id);
     if (index === -1) this.lineItems.push(lineItem);
     else this.lineItems.splice(index, 1, lineItem);

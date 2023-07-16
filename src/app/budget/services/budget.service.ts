@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ICategoryGroup } from '@model/interfaces/category-group';
-import { ILineItem } from '@model/interfaces/line-item';
 import { Observable, Subject, of, tap, BehaviorSubject } from 'rxjs';
 import { categoryGroups, lineItems, monthlyBudgets } from '@model/data-store';
 import { IMonthlyBudget } from '@model/interfaces/monthly-budget';
 import { IUpdatedTotals } from '@model/interfaces/updated-totals';
+import { IBudgetLineItem } from '@model/interfaces/budget-line-item';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class BudgetService {
 
   constructor() { }
 
-  getLineItems(): Observable<ILineItem[]> {
+  getLineItems(): Observable<IBudgetLineItem[]> {
     return of(lineItems.map((li) => JSON.parse(JSON.stringify(li))));
   }
 

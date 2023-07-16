@@ -1,7 +1,7 @@
 <div class="m-1">
     <div class="container-fluid">
         <div *ngIf="!isEditing" class="row" (click)="edit();">
-            <div class="col">{{lineItem.Name}}</div>
+            <div class="col">{{lineItem.LineItem.Name}}</div>
             <div class="col">{{lineItem.Account.Name}}</div>
             <div class="col">{{lineItem.Planned | currency}}</div>
             <div class="col">{{lineItem.Actual | currency}}</div>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div *ngIf="isEditing && lineItemClone" class="row">
-            <div class="col"><input type="text" [(ngModel)]="lineItemClone!.Name" /></div>
+            <div class="col"><input type="text" [(ngModel)]="lineItemClone!.LineItem.Name" /></div>
             <div class="col">{{lineItem.Account.Name}}</div>
             <div class="col"><input type="number" [(ngModel)]="lineItemClone!.Planned" scale="2" /></div>
             <div class="col"><input type="number" [(ngModel)]="lineItemClone!.Actual" scale="2" /></div>
